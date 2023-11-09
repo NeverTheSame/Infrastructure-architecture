@@ -59,7 +59,7 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
 5. **Developer Workflow**:
     - Provide development environments that match production as closely as possible.
     - Use Terraform to define and manage resources.
-    </BR> To run a development and production environment, use separate `.tfvars` files: [**TF/dev.tfvars**](TF/dev.tfvars) and [**TF/prod.tfvars**](TF/prod.tfvars)
+    </BR> To run a development and production environment, use separate `.tfvars` files: [**TF/dev.tfvars**](Infrastructure-architecture/TF/dev.tfvars) and [**TF/prod.tfvars**](TF/prod.tfvars)
     - Support both Windows and MacOSX development environments.
 
 6. **Deployment Strategies**:
