@@ -165,7 +165,7 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
 ### **4. Security Considerations**:
 - **Identity and Access Management (IAM)**:
     - Use IAM roles and policies for fine-grained access control: [**security.md**](Security.md)
-    - Least privilege principle for permissions.
+    - Least privilege principle for permissions: [**TF/iam.tf**](TF/iam.tf)
 - **Encryption**:
     - Enable encryption at rest (S3, RDS) using KMS: [**TF/s3.tf**](TF/s3.tf), *storage_encrypted* in [**TF/db.tf**](TF/db.tf)
     - Use SSL/TLS for data in transit.
