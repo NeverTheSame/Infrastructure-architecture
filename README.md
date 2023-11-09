@@ -59,15 +59,15 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
 5. **Developer Workflow**:
     - Provide development environments that match production as closely as possible.
     - Use Terraform to define and manage resources.
-    </BR> To run a development and production environment, use separate `.tfvars` files: **TF/dev.tfvars** and **TF/prod.tfvars**
+    </BR> To run a development and production environment, use separate `.tfvars` files: [**TF/dev.tfvars**](TF/dev.tfvars) and [**TF/prod.tfvars**](TF/prod.tfvars)
     - Support both Windows and MacOSX development environments.
 
 6. **Deployment Strategies**:
     - Implement blue-green deployments or canary releases to minimize service disruption.
-    </BR> To implement blue-green deployment `.tfvars` files for environment-specific variables: **TF/blue.tfvars** / **TF/green.tfvars**. Source: [Use Application Load Balancers for blue-green and canary deployments](https://developer.hashicorp.com/terraform/tutorials/aws/blue-green-canary-tests-deployments)
+    </BR> To implement blue-green deployment `.tfvars` files for environment-specific variables: [**TF/blue.tfvars**](TF/blue.tfvars) / [**TF/green.tfvars**](TF/green.tfvars). Source: [Use Application Load Balancers for blue-green and canary deployments](https://developer.hashicorp.com/terraform/tutorials/aws/blue-green-canary-tests-deployments)
     - Separate frontend and backend deployments to allow independent scaling and updates.
 
-7. **Version Management**:
+1. **Version Management**:
     - Keep track of current and previous software versions.
     </BR> Can be achieved by using Terraform module versioning: specify which version of a module to use in configuration. For example, specify a particular version of a module in Terraform configuration:
         ```
@@ -77,19 +77,19 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
         ```
     - Use version tags in Git for easy rollback.
     - Automate version management in CI/CD pipeline.
-    - Keep Terraform's state in S3 to maintain a history of changes: **TF/backend.tf**
+    - Keep Terraform's state in S3 to maintain a history of changes: [**TF/backend.tf**](TF/backend.tf)
 
-8. **High Availability and Uptime**:
+2. **High Availability and Uptime**:
     - Deploy across multiple availability zones or regions.
     - Use load balancers and failover mechanisms.
     - Monitor and alert on SLA violations.
 
-9. **Security and Compliance**:
+3. **Security and Compliance**:
     - Encrypt data at rest and in transit.
     - Implement access controls and authentication.
     - Adhere to industry-specific compliance requirements (e.g., HIPAA, GDPR).
 
-10. **Testing and Monitoring**:
+4.  **Testing and Monitoring**:
     - Integrate automated testing into the CI/CD pipeline.
     - Run longevity and stress tests regularly.
     - Monitor application performance, logs, and metrics.
@@ -129,8 +129,8 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
 - **Terraform**: Leverage Terraform for infrastructure provisioning and management.
 - **Kubernetes**: Container orchestration / dependency management.
 - **Components**:
-    - **Database**: RDS for PostgreSQL: **TF/db.tf**
-    - **Storage**: S3 for object storage **TF/s3.tf**
+    - **Database**: RDS for PostgreSQL: [**TF/db.tf**](TF/db.tf)
+    - **Storage**: S3 for object storage [**TF/s3.tf**](TF/s3.tf)
     - **Networking**: VPC, subnets, security groups, and route tables.
     - **Monitoring and Logging**: CloudWatch for metrics and logs.
     - **Deployment**: GitHub actions for CI/CD pipelines.
@@ -143,47 +143,47 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
     - Containerize backend services (C/C++) using Docker.
     - Deploy containers on ECS for orchestration.
     - Implement autoscaling based on workload. 
-    </BR> Use Horizontal Pod Autoscaler (HPA) to manage workload. The HPA controller monitors the workload’s pods to determine if it needs to change the number of pod replicas: **K8S/horizontal-pod-autoscaler.yaml**
+    </BR> Use Horizontal Pod Autoscaler (HPA) to manage workload. The HPA controller monitors the workload’s pods to determine if it needs to change the number of pod replicas: [**K8S/horizontal-pod-autoscaler.yaml**](K8S/horizontal-pod-autoscaler.yaml)
 
 **3. Network Design**:
 - **Virtual Private Cloud (VPC)**:
-    - Create a VPC with public and private subnets: **networking.tf**
+    - Create a VPC with public and private subnets: [**TF/networking.tf**](TF/networking.tf)
     - Place frontend resources in public subnets. 
        - When creating frontend resources, specify the newly created public subnet as their subnet. This ensures that frontend resources are accessible from the internet.
     - Backend services and databases in private subnets.
 - **Security Groups and Network ACLs**:
-    - Define security groups to control inbound/outbound traffic: **security.tf**
+    - Define security groups to control inbound/outbound traffic:[**TF/security.tf**](TF/security.tf)
     - Alternatively, use network ACLs for subnet-level access control.
        - It will add some complexity to the design because network ACLs (NACLs) are used on the subnet-level access control level instead of security groups.
 - **Route Tables**:
-    - Route traffic between subnets and to the internet: **route_tables.tf**
+    - Route traffic between subnets and to the internet: [**TF/route_tables.tf**](TF/route_tables.tf)
     - Use NAT gateways for private subnet internet access.
 - **Load Balancers**:
-    - Set up Application Load Balancers (ALB) for frontend: **load_balancers.tf**
+    - Set up Application Load Balancers (ALB) for frontend: [**TF/load_balancers.tf**](TF/load_balancers.tf)
     - Network Load Balancers (NLB) for backend services.
 
 ### **4. Security Considerations**:
 - **Identity and Access Management (IAM)**:
-    - Use IAM roles and policies for fine-grained access control: **security.md**
+    - Use IAM roles and policies for fine-grained access control: [**security.md**](security.md)
     - Least privilege principle for permissions.
 - **Encryption**:
-    - Enable encryption at rest (S3, RDS) using KMS: **s3.tf**, *storage_encrypted* in **db.tf**
+    - Enable encryption at rest (S3, RDS) using KMS: [**TF/s3.tf**](TF/s3.tf), *storage_encrypted* in [**TF/db.tf**](TF/db.tf)
     - Use SSL/TLS for data in transit.
        - In TF, often defined by a parameter such as `require_secure_transport`
-       - Alternatively, can be achieved with a different TF provider: [tls](https://registry.terraform.io/providers/hashicorp/tls/latest/docs): **tls.tf**
+       - Alternatively, can be achieved with a different TF provider: [tls](https://registry.terraform.io/providers/hashicorp/tls/latest/docs): [**TF/tls.tf**](TF/tls.tf)
 - **Secrets Management**:
-    - Store sensitive information (database credentials, API keys) in AWS Secrets Manager: **secrets.tf**
+    - Store sensitive information (database credentials, API keys) in AWS Secrets Manager: [**TF/secrets.tf**](TF/secrets.tf)
 - **Monitoring and Auditing**:
-    - Set up CloudTrail for auditing API calls: **monitoring.tf**
+    - Set up CloudTrail for auditing API calls: [**TF/monitoring.tf**](TF/monitoring.tf)
     - Monitor security groups, VPC flow logs, and CloudWatch alarms.
 - **DDoS Protection**:
     - Use AWS Shield for DDoS protection
-       - Implemented in CloudFront distributions and Route53 health checks: **ddos.tf**
-    - Configure WAF (Web Application Firewall) for frontend protection: *aws_wafv2_web_acl* in **security.tf**
+       - Implemented in CloudFront distributions and Route53 health checks: [**TF/ddos.tf**](TF/ddos.tf)
+    - Configure WAF (Web Application Firewall) for frontend protection: *aws_wafv2_web_acl* in [**TF/security.tf**](TF/security.tf)
 - **Backup and Disaster Recovery**:
-    - Regularly back up RDS database: *aws_db_instance/backup_retention_period* in **db.tf**
+    - Regularly back up RDS database: *aws_db_instance/backup_retention_period* in [**TF/db.tf**](TF/db.tf)
        - To avoid destroying the database after each apply, use the lifecycle argument with ignore_changes to ignore changes to the snapshot_identifier.
-    - Implement automated snapshots and cross-region replication: **backup.tf**
+    - Implement automated snapshots and cross-region replication: [**TF/backup.tf**](TF/backup.tf)
     - Test disaster recovery procedures.
       -  **Test Many Scenarios**: It's important to test a variety of disaster scenarios, including equipment failures, user errors, and natural disasters.
       -  **Regular Testing**: Regular testing helps identify any flaws or changes that might affect the disaster recovery plan.
@@ -200,7 +200,7 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
     - Dependency Alerts: alert developers when a repository is using a software dependency with a known vulnerability.
     - Security Updates: Automatically raise pull requests to update the dependencies you use that have known security vulnerabilities.
     - Version Updates: automatically raise pull requests to keep your dependencies up-to-date.
-4. **Continuous Integration/Continuous Deployment (CI/CD)**: Use `GitHub Actions` to automate the process of building, testing, and deploying application. **.github/workflows/node-tests.yaml** checks out the code, sets up Node.js, installs the dependencies, and runs the tests.
+4. **Continuous Integration/Continuous Deployment (CI/CD)**: Use `GitHub Actions` to automate the process of building, testing, and deploying application. [**.github/workflows/node-tests.yaml**](.github/workflows/node-tests.yaml) checks out the code, sets up Node.js, installs the dependencies, and runs the tests.
 5. **Automated Testing**: Include unit tests, integration tests, and end-to-end tests. Tools like Jest for JavaScript or Google Test for C++ can be used for unit testing. Selenium or Puppeteer can be used for end-to-end testing.
 
 <a id="item-seven"></a>
@@ -234,7 +234,7 @@ To achieve true cloud-native application architecture, decision is to use EKS (E
 
 </BR>**To provision EKS** cluster, decision is to use Terraform. Reason:
 - Hashicorp maintains an [official documentation about deploying EKS with Terraform](https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks).
-- See **TF/eks.tf**
+- See [**TF/eks.tf**](TF/eks.tf)
 
 
 <a id="item-eight"></a>
@@ -254,27 +254,27 @@ Decision is to use **polyrepo** (separate Git projects) opposed to monorepo.
 <a id="item-nine"></a>
 ## Developer's journey
 1. **Local Development**: Developer:
-   - works on their code locally: **Code/dev-app.py**
+   - works on their code locally: [**Code/dev-app.py**](Code/dev-app.py)
    - makes changes to their respective microservices. 
-   - tests their changes locally using Docker (to replicate the production environment on local machine): **Code/Dockerfile**
-   - **Outcome:** Docker image of their service that can be run locally to see if it works as expected: **Code/test-docker-app.sh**
+   - tests their changes locally using Docker (to replicate the production environment on local machine): [**Code/Dockerfile**](Code/Dockerfile)
+   - **Outcome:** Docker image of their service that can be run locally to see if it works as expected: [**Code/test-docker-app.sh**](Code/test-docker-app.sh)
 2. **Code Commit**: Once the developer is satisfied with changes, they:
    - commit the code to Git (`git add .` and `git commit -m "message"`)
    - (automatically) trigger the CI/CD pipeline whenever file is commited to `main` branch 
    </BR>**Note:** In real-world scenario, developers team can use different git approaches, such as `feature branch workflow` (separate branch for feature) or `gitflow workflow` (main, development, feature, release, etc.)
-   - have pipeline configured to automatically build Docker images for each service whenever code is pushed to the repository: **.github/workflows/docker-build.yaml**
+   - have pipeline configured to automatically build Docker images for each service whenever code is pushed to the repository: [**.github/workflows/docker-build.yaml**](.github/workflows/docker-build.yaml)
 3. **Continuous Integration**: The CI/CD pipeline pulls the latest code from the Git after all the tests pass. The image then is pushed to a Docker registry: `docker push dev-image:latest`
 4. **Continuous Deployment**: Once the Docker images are in the registry, deploy to a Kubernetes cluster. Kubernetes pulls the images from the registry and runs them as containers. Use Kubernetes deployment to manage services and ensure that there are 3 replicas are always running.
-    - Create a Kubernetes deployment: **K8S/deployment.yaml**
-    - Create a Kubernetes service for each deployment: **K8S/service.yaml**
+    - Create a Kubernetes deployment: [**K8S/deployment.yaml**](K8S/deployment.yaml)
+    - Create a Kubernetes service for each deployment: [**K8S/service.yaml**](K8S/service.yaml)
     - Make sure kubectl is configured to connect to EKS cluster: `aws eks update-kubeconfig --region us-west-2 --name dev-cluster`
     - Apply the deployment and service to the Kubernetes cluster. For example, `kubectl apply -f deployment.yaml` and `kubectl apply -f service.yaml`
     - Kubernetes pulls the Docker image from the registry and starts the specified number of replicas.
 5. **Rolling Updates & Rollbacks**: To deploy a new version of a service without downtime and easily rollback to a previous version in case of an error, update the Docker image in the Kubernetes deployment and apply it to the cluster. Kubernetes will gradually replace the old replicas with new ones.
 6. **Monitoring & Logging**: 
-   1. Once service is running use Terraform [eks-monitoring-logging module](https://registry.terraform.io/modules/shamimice03/eks-monitoring-logging/aws/latest) to send EKS logs to CloudWatch: **TF/monitoring.tf**
-   2. Once logs are in Cloudwatch, create alarms to monitor the application's performance and to catch any issues. If a problem is detected, it can be quickly addressed and a new version of the application can be deployed: **TF/monitoring.tf → aws_cloudwatch_metric_alarm.eks-alarm**
-   3. In addition to that, to achieve 99.99% uptime SLA, implement readiness probe in Kubernetes to determine when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready: **K8S/readiness-pod.yaml**
+   1. Once service is running use Terraform [eks-monitoring-logging module](https://registry.terraform.io/modules/shamimice03/eks-monitoring-logging/aws/latest) to send EKS logs to CloudWatch: [**TF/monitoring.tf**](TF/monitoring.tf)
+   2. Once logs are in Cloudwatch, create alarms to monitor the application's performance and to catch any issues. If a problem is detected, it can be quickly addressed and a new version of the application can be deployed: [**TF/monitoring.tf**](TF/monitoring.tf) → aws_cloudwatch_metric_alarm.eks-alarm**
+   3. In addition to that, to achieve 99.99% uptime SLA, implement readiness probe in Kubernetes to determine when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready: [**K8S/readiness-pod.yaml**](K8S/readiness-pod.yaml)
 
 ## Helpful links
 - [Approaches to implementing multi-tenancy in SaaS applications](https://developers.redhat.com/articles/2022/05/09/approaches-implementing-multi-tenancy-saas-applications)
