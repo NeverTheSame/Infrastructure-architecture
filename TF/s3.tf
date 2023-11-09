@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "dev-bucket" {
     }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "dev-encryption" {
   bucket = aws_s3_bucket.dev-bucket.id
 
   rule {
