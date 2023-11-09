@@ -59,7 +59,7 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
 5. **Developer Workflow**:
     - Provide development environments that match production as closely as possible.
     - Use Terraform to define and manage resources.
-    </BR> To run a development and production environment, use separate `.tfvars` files: [**TF/dev.tfvars**](Infrastructure-architecture/TF/dev.tfvars) and [**TF/prod.tfvars**](TF/prod.tfvars)
+    </BR> To run a development and production environment, use separate `.tfvars` files: [**TF/dev.tfvars**](/TF/dev.tfvars) and [**TF/prod.tfvars**](TF/prod.tfvars)
     - Support both Windows and MacOSX development environments.
 
 6. **Deployment Strategies**:
@@ -67,7 +67,7 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
     </BR> To implement blue-green deployment `.tfvars` files for environment-specific variables: [**TF/blue.tfvars**](TF/blue.tfvars) / [**TF/green.tfvars**](TF/green.tfvars). Source: [Use Application Load Balancers for blue-green and canary deployments](https://developer.hashicorp.com/terraform/tutorials/aws/blue-green-canary-tests-deployments)
     - Separate frontend and backend deployments to allow independent scaling and updates.
 
-1. **Version Management**:
+7. **Version Management**:
     - Keep track of current and previous software versions.
     </BR> Can be achieved by using Terraform module versioning: specify which version of a module to use in configuration. For example, specify a particular version of a module in Terraform configuration:
         ```
@@ -79,17 +79,17 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
     - Automate version management in CI/CD pipeline.
     - Keep Terraform's state in S3 to maintain a history of changes: [**TF/backend.tf**](TF/backend.tf)
 
-2. **High Availability and Uptime**:
+8. **High Availability and Uptime**:
     - Deploy across multiple availability zones or regions.
     - Use load balancers and failover mechanisms.
     - Monitor and alert on SLA violations.
 
-3. **Security and Compliance**:
+9. **Security and Compliance**:
     - Encrypt data at rest and in transit.
     - Implement access controls and authentication.
     - Adhere to industry-specific compliance requirements (e.g., HIPAA, GDPR).
 
-4.  **Testing and Monitoring**:
+10. **Testing and Monitoring**:
     - Integrate automated testing into the CI/CD pipeline.
     - Run longevity and stress tests regularly.
     - Monitor application performance, logs, and metrics.
