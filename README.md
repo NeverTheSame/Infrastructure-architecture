@@ -13,7 +13,7 @@
 ## Task statement
 The application is a complex system developed and maintained as a cloud-native application and offered as a service (imagine building AWS's RDS service).
 Provide an infrastructure architecture that would be the most suitable for running a development and production environment to fulfill the following requirements.
-- The application is multitenant and multiple customers access the same application instance
+- The application is multitenant and multiple customers  access the same application instance
 - There are thousands of customers
 - The code needs to be versioned
 - Developers need many dependencies and configure complex tool changes to build and develop
@@ -164,7 +164,7 @@ Design an infrastructure architecture that meets the requirements for cloud-nati
 
 ### **4. Security Considerations**:
 - **Identity and Access Management (IAM)**:
-    - Use IAM roles and policies for fine-grained access control: [**security.md**](security.md)
+    - Use IAM roles and policies for fine-grained access control: [**security.md**](Security.md)
     - Least privilege principle for permissions.
 - **Encryption**:
     - Enable encryption at rest (S3, RDS) using KMS: [**TF/s3.tf**](TF/s3.tf), *storage_encrypted* in [**TF/db.tf**](TF/db.tf)
