@@ -6,7 +6,7 @@ resource "aws_cloudtrail" "dev-cloudtrail-bucket" {
 
 # A VPC attachment to capture IP traffic for a specific VPC. 
 # Logs are sent to a dedicated S3 Bucket. 
-resource "aws_flow_log" "example" {
+resource "aws_flow_log" "dev-flow-log" {
   log_destination      = aws_cloudwatch_log_group.dev-cloudwatch-log-group.arn
   log_destination_type = "cloud-watch-logs"
   traffic_type         = "ALL"
